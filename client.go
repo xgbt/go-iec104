@@ -3,8 +3,10 @@ package iec104
 import (
 	"context"
 	"crypto/tls"
+	"encoding/binary"
 	"errors"
 	"fmt"
+	"math"
 	"net"
 )
 
@@ -356,6 +358,45 @@ func (c *Client) SendSingleCommand(address IOA, close bool) error {
 	}
 	c.SendIFrame(&ASDU{
 		typeID: CScNa1,
+		sq:     false,
+		nObjs:  NOO(len(ios)),
+		t:      false,
+		cot:    CotAct,
+		ios:    ios,
+	})
+	select {
+	case rsp := <-c.cmdRspChan:
+		if rsp.err != nil {
+			return rsp.err
+		}
+	}
+	return nil
+}
+
+func float32ToBytes(f float32) []byte {
+	bits := math.Float32bits(f)
+	bytes := make([]byte, 4)
+	binary.LittleEndian.PutUint32(bytes, bits)
+	return bytes
+}
+
+func (c *Client) SendSetPointShortFloat(address IOA, val float32) error {
+	ie := &InformationElement{
+		Format: []InformationElementType{IEEE754STD + QOS},
+	}
+	// float32 转 []byte
+
+	ie.Raw = float32ToBytes(val)
+	ie.Raw = append(ie.Raw, 0x00)
+	// ie.Raw = []byte{0x9A, 0x99, 0x99, 0x3F, 0x00}
+	ios := []*InformationObject{
+		{
+			ioa: address,
+			ies: []*InformationElement{ie},
+		},
+	}
+	c.SendIFrame(&ASDU{
+		typeID: CSeNc1,
 		sq:     false,
 		nObjs:  NOO(len(ios)),
 		t:      false,

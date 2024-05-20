@@ -1,4 +1,4 @@
-module github.com/yobol/go-iec104
+module my/go-iec104
 
 go 1.18
 
