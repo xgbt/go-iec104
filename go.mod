@@ -1,6 +1,6 @@
-module my/go-iec104
+module github.com/xgbt/go-iec104
 
-go 1.18
+go 1.21.1
 
 require github.com/sirupsen/logrus v1.9.0
 

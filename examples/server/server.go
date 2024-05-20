@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/sirupsen/logrus"
-	"github.com/yobol/go-iec104"
+	"github.com/xgbt/go-iec104"
 )
 
 func main() {

@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
-	"github.com/sirupsen/logrus"
-	"github.com/yobol/go-iec104"
 	"time"
+
+	"github.com/sirupsen/logrus"
+	"github.com/xgbt/go-iec104"
 )
 
 const (
-	serverAddress = "172.16.251.22:6666"
+	serverAddress = "127.0.0.1:2404"
 )
 
 type handler struct{}
@@ -71,6 +72,8 @@ func main() {
 		panic(any(err))
 	}
 	defer client.Close()
+
+	client.SendSetPointShortFloat(10, 114.514)
 
 	go func() {
 		time.Sleep(5 * time.Second)
