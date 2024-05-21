@@ -75,41 +75,6 @@ func main() {
 
 	client.SendSetPointShortFloat(10, 114.514)
 
-	go func() {
-		time.Sleep(5 * time.Second)
-		client.SendTestFrame()
-	}()
-
-	go func() {
-		time.Sleep(1 * time.Second)
-		client.SendGeneralInterrogation()
-	}()
-
-	go func() {
-		time.Sleep(2 * time.Second)
-		client.SendCounterInterrogation()
-	}()
-
-	go func() {
-		time.Sleep(3 * time.Second)
-		if err := client.SendSingleCommand(iec104.IOA(1), true /* close */); err != nil {
-			panic(any(err))
-		}
-		if err := client.SendSingleCommand(iec104.IOA(1), false /* close */); err != nil {
-			panic(any(err))
-		}
-		if err := client.SendDoubleCommand(iec104.IOA(1), true /* close */); err != nil {
-			panic(any(err))
-		}
-		if err := client.SendDoubleCommand(iec104.IOA(1), false /* close */); err != nil {
-			panic(any(err))
-		}
-	}()
-
-	go func() {
-		time.Sleep(5 * time.Second)
-		fmt.Printf("Connected: %v\n", client.IsConnected())
-	}()
 
 	time.Sleep(30 * time.Minute)
 }

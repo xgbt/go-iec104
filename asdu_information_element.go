@@ -408,6 +408,22 @@ func (asdu *ASDU) parseInformationElement(data []byte, ie *InformationElement) {
 		}
 		asdu.toBeHandled = true
 		asdu.sendSFrame = true
+	case CSeNc1:
+		ie.getIEEESTD754()
+		ie.getQDS()
+		switch asdu.cot {
+		case CotActCon:
+			_lg.Debugf("recieve i frame: execute confirmation of set command short float - %v [遥调命令执行确认]", ie.Value)
+			asdu.cmdRsp = &cmdRsp{}
+		case CotDeactCon:
+			_lg.Debugf("recieve i frame: execute confirmation of set command short float - %v [遥调命令撤销确认]", ie.Value)
+			asdu.cmdRsp = &cmdRsp{}
+		case CotActTerm:
+			_lg.Debugf("receive i frame: termination of single command [遥调命令终止]")
+			asdu.cmdRsp = &cmdRsp{
+				err: errSetPointShortFloatTerm{},
+			}
+		}
 	case CScNa1:
 		ie.getSCO()
 		switch asdu.cot {

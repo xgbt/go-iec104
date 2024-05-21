@@ -21,3 +21,14 @@ func IsErrDoubleCmdTerm(err error) bool {
 	_, ok := err.(errDoubleCmdTerm)
 	return ok
 }
+
+type errSetPointShortFloatTerm struct{}
+
+func (e errSetPointShortFloatTerm) Error() string {
+	return "termination of set point command short floating point value"
+}
+
+func IsErrSetPointShortFloatTerm(err error) bool {
+	_, ok := err.(errSetPointShortFloatTerm)
+	return ok
+}

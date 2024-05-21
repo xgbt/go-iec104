@@ -364,11 +364,9 @@ func (c *Client) SendSingleCommand(address IOA, close bool) error {
 		cot:    CotAct,
 		ios:    ios,
 	})
-	select {
-	case rsp := <-c.cmdRspChan:
-		if rsp.err != nil {
-			return rsp.err
-		}
+	rsp := <-c.cmdRspChan
+	if rsp.err != nil {
+		return rsp.err
 	}
 	return nil
 }
@@ -382,7 +380,7 @@ func float32ToBytes(f float32) []byte {
 
 func (c *Client) SendSetPointShortFloat(address IOA, val float32) error {
 	ie := &InformationElement{
-		Format: []InformationElementType{IEEE754STD + QOS},
+		Format: []InformationElementType{IEEE754STD, QOS},
 	}
 	// float32 转 []byte
 
@@ -403,11 +401,9 @@ func (c *Client) SendSetPointShortFloat(address IOA, val float32) error {
 		cot:    CotAct,
 		ios:    ios,
 	})
-	select {
-	case rsp := <-c.cmdRspChan:
-		if rsp.err != nil {
-			return rsp.err
-		}
+	rsp := <-c.cmdRspChan
+	if rsp.err != nil {
+		return rsp.err
 	}
 	return nil
 }
@@ -467,11 +463,9 @@ func (c *Client) SendDoubleCommand(address IOA, close bool) error {
 		ios:    ios,
 	})
 
-	select {
-	case rsp := <-c.cmdRspChan:
-		if rsp.err != nil {
-			return rsp.err
-		}
+	rsp := <-c.cmdRspChan
+	if rsp.err != nil {
+		return rsp.err
 	}
 	return nil
 }
