@@ -61,7 +61,7 @@ func (c *Client) Connect() error {
 	return nil
 }
 func (c *Client) dial() (err error) {
-	schema, address, timeout := c.server.Scheme, c.server.Host, c.connectTimeout
+	schema, address, timeout := c.server.Scheme, c.server.Host, c.ConnectTimeout
 	var conn net.Conn
 	switch schema {
 	case "tcp":

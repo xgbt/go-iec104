@@ -26,7 +26,7 @@ func NewClientOption(server string, handler ClientHandler) (*ClientOption, error
 	}
 	return &ClientOption{
 		server:         remoteURL,
-		connectTimeout: DefaultConnectTimeout,
+		ConnectTimeout: DefaultConnectTimeout,
 		autoReconnectRule: &AutoReconnectRule{
 			retries:  DefaultReconnectRetries,
 			interval: DefaultReconnectInterval,
@@ -48,7 +48,7 @@ func NewClientOption(server string, handler ClientHandler) (*ClientOption, error
 
 type ClientOption struct {
 	server            *url.URL
-	connectTimeout    time.Duration
+	ConnectTimeout    time.Duration
 	autoReconnectRule *AutoReconnectRule
 
 	onConnectHandler    OnConnectHandler
@@ -66,7 +66,7 @@ type AutoReconnectRule struct {
 
 func (o *ClientOption) SetConnectTimeout(timeout time.Duration) *ClientOption {
 	if timeout > 0 {
-		o.connectTimeout = timeout
+		o.ConnectTimeout = timeout
 	}
 	return o
 }
