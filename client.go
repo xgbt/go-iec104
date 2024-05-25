@@ -108,7 +108,9 @@ func (c *Client) readingFromSocket(ctx context.Context) {
 		default:
 			apdu, err := c.readFromSocket(ctx)
 			if err != nil {
-				panic(any(fmt.Errorf("read from socket: %v", err)))
+				// panic(any(fmt.Errorf("read from socket: %v", err)))
+				fmt.Errorf("read from socket: %v", err)
+				continue
 			}
 
 			switch apdu.frame.Type() {
