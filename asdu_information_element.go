@@ -451,11 +451,11 @@ func (asdu *ASDU) parseInformationElement(data []byte, ie *InformationElement) {
 			} else {
 				_lg.Debugf("receive i frame: confirmation of single command [单点命令激活确认]")
 			}
-		case CotActTerm:
-			_lg.Debugf("receive i frame: termination of single command [单点命令激活终止]")
-			asdu.cmdRsp = &cmdRsp{
-				err: errSingleCmdTerm{},
-			}
+			// case CotActTerm:
+			// 	_lg.Debugf("receive i frame: termination of single command [单点命令激活终止]")
+			// 	asdu.cmdRsp = &cmdRsp{
+			// 		err: errSingleCmdTerm{},
+			// 	}
 		}
 	case CDcNa1:
 		ie.getDCO()
